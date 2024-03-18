@@ -1,4 +1,4 @@
-export function TempleateEngine(html, options) {
+export function TemplateEngine(html, options) {
 	var re = /<%(.+?)%>/g, 
 		reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g, 
 		code = 'with(obj) { var r=[];\n', 
@@ -20,3 +20,7 @@ export function TempleateEngine(html, options) {
 	catch(err) { console.error("'" + err.message + "'", " in \n\nCode:\n", code, "\n"); }
 	return result;
 }
+// se crea un metodo de extension para obtener el codigo de las funciones y no pasar por el engine
+Function.prototype.toCodeString = function() {
+    return this.toString().match(/{([\s\S]*)}/)[1].trim();
+};

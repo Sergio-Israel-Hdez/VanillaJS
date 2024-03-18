@@ -1,4 +1,4 @@
-import { TempleateEngine } from "../engine.js";
+import { TemplateEngine } from "../engine.js";
 export function MenuComponent() {
   var template = `
     <nav class="navbar navbar-expand-sm bg-light navbar-light">
@@ -9,5 +9,5 @@ export function MenuComponent() {
       </ul>
     </nav>  
   `;
-  return TempleateEngine(template.toString(),{})
+  return TemplateEngine(template.toString(),{})
 }

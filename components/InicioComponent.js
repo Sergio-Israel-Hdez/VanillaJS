@@ -1,11 +1,11 @@
 import { MenuComponent } from "./MenuComponent.js";
-import { TempleateEngine } from "../engine.js";
+import { TemplateEngine } from "../engine.js";
 
 let _datos = [
-        {nombre:"Sergio",apellido:"Flores"},
-        {nombre:"nelson",apellido:""},
-        {nombre:"Guillermo",apellido:"El Basico"}
-      ]
+  { nombre: "Sergio", apellido: "Flores" },
+  { nombre: "nelson", apellido: "Cruz" },
+  { nombre: "Guillermo", apellido: "El Basico" }
+]
 export function InicioComponent() {
 
   const template = `
@@ -20,13 +20,14 @@ export function InicioComponent() {
       <label>Apellido:</label>  
       <input type="text" id="apellido">
 
-      <button type="button" id="miBoton" onClick="<% this.getValues %>" >Enviar</button>
-      <button type="button" id="miBoton2" onClick="<% this.getValues2 %>" >Enviar segundo</button>
+      
+      <button type="button" id="miBoton2" onClick="<% this.getValues %>" >Enviar</button>
+      <button type="button" id="miBoton2" onClick="<% this.getValuesEx %>" >Enviar</button>
     </form>
     <div class="container">
         <div class="row">
             <%for(var usuario in this.datos) {%>            
-                <div class="col-sm-6 bg-success" >
+                <div class="col-sm-6" >
                     <div class="card">
                             <div class="card-head"><%this.datos[usuario].nombre%></div>
                             <div class="card-body"><%this.datos[usuario].apellido%></div>
@@ -37,37 +38,31 @@ export function InicioComponent() {
     </div>
     
   `;
- 
 
 
   const options = {
-    MenuComponent : MenuComponent(),
+    MenuComponent: MenuComponent(),
     titulo: "Inicio",
     datos: _datos,
-    getValues: function(){
-      alert('dio click');
-      var nombre = document.getElementById('nombre')?.value;
-      var apellido = document.getElementById('apellido')?.value;
-      console.log(nombre+ ' '+apellido);
-    },
-    getValues2: GetValues()
+    getValues: GetValues(),
+    getValuesEx: _getValuesEx.toCodeString()
   };
 
-  return TempleateEngine(template.toString(),options);
+  return TemplateEngine(template.toString(), options);
 }
 
-function GetValues(){
+function GetValues() {
   const template = `
     var nombre = document.getElementById('nombre').value;
     var apellido = document.getElementById('apellido').value;
     console.log(nombre+ ' '+apellido);
     alert('dio click');
   `;
-  return TempleateEngine(template.toString(),{});
+  return TemplateEngine(template.toString(), {});
 };
-function getValuesClick(){
-    alert('dio click');
-    var nombre = document.getElementById('nombre')?.value;
-    var apellido = document.getElementById('apellido')?.value;
-    console.log(nombre+ ' '+apellido);
-};
+function _getValuesEx(){
+  var nombre = document.getElementById('nombre').value;
+  var apellido = document.getElementById('apellido').value;
+  console.log(nombre+ ' '+apellido);
+  alert('dio click');
+}
