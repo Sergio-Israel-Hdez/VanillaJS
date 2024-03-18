@@ -1,13 +1,10 @@
 import { MenuComponent } from "./MenuComponent.js";
 import { TemplateEngine } from "../engine.js";
 
-let _datos = [
-  { nombre: "Sergio", apellido: "Flores" },
-  { nombre: "nelson", apellido: "Cruz" },
-  { nombre: "Guillermo", apellido: "El Basico" }
-]
-export function InicioComponent() {
+let _datos = []
 
+export async function InicioComponent() {
+  
   const template = `
     <%this.MenuComponent%>
     <div>
@@ -15,13 +12,10 @@ export function InicioComponent() {
     </div>
     <form id="mi-formulario">
       <label>Nombre:</label>
-      <input type="text" id="nombre">
+      <input type="text" id="nombre"></input>
 
       <label>Apellido:</label>  
-      <input type="text" id="apellido">
-
-      
-      <button type="button" id="miBoton2" onClick="<% this.getValues %>" >Enviar</button>
+      <input type="text" id="apellido"></input>
       <button type="button" id="miBoton2" onClick="<% this.getValuesEx %>" >Enviar</button>
     </form>
     <div class="container">
@@ -38,31 +32,45 @@ export function InicioComponent() {
     </div>
     
   `;
-
+  await _GetUsers();
 
   const options = {
     MenuComponent: MenuComponent(),
     titulo: "Inicio",
     datos: _datos,
-    getValues: GetValues(),
-    getValuesEx: _getValuesEx.toCodeString()
+    getValuesEx: _SaveValues.toCodeString()
   };
-
   return TemplateEngine(template.toString(), options);
 }
 
-function GetValues() {
-  const template = `
-    var nombre = document.getElementById('nombre').value;
-    var apellido = document.getElementById('apellido').value;
-    console.log(nombre+ ' '+apellido);
-    alert('dio click');
-  `;
-  return TemplateEngine(template.toString(), {});
-};
-function _getValuesEx(){
-  var nombre = document.getElementById('nombre').value;
-  var apellido = document.getElementById('apellido').value;
-  console.log(nombre+ ' '+apellido);
-  alert('dio click');
+function _SaveValues(){
+  var _nombre = document.getElementById('nombre').value;
+  var _apellido = document.getElementById('apellido').value;
+  const _datos = {
+    id: 1,
+    nombre: _nombre,
+    apellido:_apellido
+  }
+  const _options = {
+    method:'POST',
+    headers:{'Content-Type': 'application/json'},
+    body: JSON.stringify(_datos)
+  }
+  fetch('https://65f868eadf151452460f510d.mockapi.io/api/v1/users',_options)
+  .then(response => response.json())
+  .then(json => {
+    console.log(json);
+    window.location.reload();
+  })
+  .catch(err=> console.log(err));
+}
+
+function _GetUsers(){
+  return fetch('https://65f868eadf151452460f510d.mockapi.io/api/v1/users')
+  .then(response => response.json())
+  .then(json => {    
+    console.log(json)
+    _datos = json;
+  })
+  .catch(err=> console.log(err));
 }
