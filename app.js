@@ -1,8 +1,10 @@
 import { InicioComponent } from "./components/InicioComponent.js";
 import { AcercaComponent } from "./components/AcercaComponent.js";
 import { ContactoComponent } from "./components/ContactoComponent.js";
+import { PokemonList } from "./components/PokemonList.js";
 
 class Router {
+  rutas
   constructor(rutas) {
     this.rutas = rutas;
     this.contenido = document.getElementById("contenido");
@@ -17,11 +19,11 @@ class Router {
       await this.renderizar(rutaActual.componente);
     });
 
-    const rutaInicio = this.rutas.find((ruta) => ruta.path === "/");
-    await this.renderizar(rutaInicio.componente);
+    //const rutaInicio = this.rutas.find((ruta) => ruta.path === "/");
+    await this.renderizar();
   }
 
-  async renderizar(componente) {
+  async renderizar(componente = InicioComponent) {
     this.contenido.innerHTML = await componente();
   }
 }
@@ -39,6 +41,10 @@ const rutas = [
     path: "/contacto",
     componente: ContactoComponent,
   },
+  {
+    path: "/pokemonList",
+    componente: PokemonList
+  }
 ];
 
 const router = new Router(rutas);
