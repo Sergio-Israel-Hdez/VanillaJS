@@ -6,6 +6,7 @@ export function MenuComponent() {
         <li class="nav-item"><a class="nav-link" href="#/">Inicio</a></li>
         <li class="nav-item"><a class="nav-link"  href="#/acerca">Acerca</a></li>
         <li class="nav-item"><a class="nav-link"  href="#/contacto">Contacto</a></li>
+        <li class="nav-item"><a class="nav-link"  href="#/pokemonList">Listado de Pokemons</a></li>
       </ul>
     </nav>  
   `;

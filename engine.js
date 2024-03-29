@@ -16,8 +16,12 @@ export function TemplateEngine(html, options) {
 	}
 	add(html.substr(cursor, html.length - cursor));
 	code = (code + 'return r.join(""); }').replace(/[\r\t\n]/g, ' ');
-	try { result = new Function('obj', code).apply(options, [options]); }
-	catch(err) { console.error("'" + err.message + "'", " in \n\nCode:\n", code, "\n"); }
+	try { 
+		result = new Function('obj', code).apply(options, [options]); 
+	}
+	catch(err) { 
+		console.error("'" + err.message + "'", " in \n\nCode:\n", code, "\n"); 
+	}
 	return result;
 }
 // se crea un metodo de extension para obtener el codigo de las funciones y no pasar por el engine

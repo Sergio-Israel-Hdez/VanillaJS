@@ -3,7 +3,7 @@ import { TemplateEngine } from "../engine.js";
 
 let _datos = []
 
-export async function InicioComponent() {
+export const InicioComponent = async () => {
   
   const template = `
     <%this.MenuComponent%>
@@ -40,6 +40,7 @@ export async function InicioComponent() {
     datos: _datos,
     getValuesEx: _SaveValues.toCodeString()
   };
+  
   return TemplateEngine(template.toString(), options);
 }
 
